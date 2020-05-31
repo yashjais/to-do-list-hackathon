@@ -129,7 +129,6 @@ userSchema.methods.generateToken = function () {
         .catch(err => Promise.reject(err))
 }
 
-
 const User = mongoose.model('User', userSchema)
 
 module.exports = User

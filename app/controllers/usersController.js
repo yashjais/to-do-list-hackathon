@@ -2,22 +2,22 @@ const User = require('../models/user')
 const pick = require('lodash/pick')
 
 module.exports.register = (req, res) => {
-    console.log('in register', req.body)
+    // console.log('in register', req.body)
     const body = pick(req.body, ['mobile', 'email', 'password'])
-    console.log(body)
+    // console.log(body)
     const user = new User(body)
     user.save()
         .then(user => {
-            console.log(user)
+            // console.log(user)
             res.send(pick(user, ['_id', 'mobile', 'email']))
         })
         .catch(err => res.send(err))
 }
 
 module.exports.login = (req, res) => {
-    console.log('in the login', req.body)
+    // console.log('in the login', req.body)
     const body = pick(req.body, ['email', 'password'])
-    console.log(body)
+    // console.log(body)
     User.findByCredentials(body.email, body.password)
         .then(user => {
             // res.send(user)
@@ -33,7 +33,7 @@ module.exports.login = (req, res) => {
 module.exports.account = (req, res) => {
     const { user } = req
     const { token } = req
-    // console.log(user, token)
+    console.log(user, token)
     res.send(pick(user, ['_id', 'email', 'mobile']))
 }
 
