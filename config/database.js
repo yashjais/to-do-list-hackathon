@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const setUpDB = () => {
-    mongoose.connect('mongodb://localhost:27017/to-do-list', { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect('mongodb://localhost:27017/to-do-list', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
         .then(res => console.log('connected to the DB'))
         .catch(err => console.log(err))
 }

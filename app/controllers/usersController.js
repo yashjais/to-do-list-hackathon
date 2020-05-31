@@ -13,3 +13,19 @@ module.exports.register = (req, res) => {
         })
         .catch(err => res.send(err))
 }
+
+module.exports.login = (req, res) => {
+    console.log('in the login', req.body)
+    const body = pick(req.body, ['email', 'password'])
+    console.log(body)
+    User.findByCredentials(body.email, body.password)
+        .then(user => {
+            // res.send(user)
+            return user.generateToken()
+        })
+        .then(token => res.send(token))
+        .catch(err => {
+            // res.status('401').send('invalid email or password')
+            res.send(err)
+        })
+}

@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const validator = require('validator')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const userSchema = new Schema({
     mobile: {
@@ -54,12 +55,12 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function (next) {
     const user = this
-    console.log('in the pre')
+    // console.log('in the pre')
     if (user.isNew) {
-        console.log('user is new')
+        // console.log('user is new')
         bcrypt.genSalt(10)
             .then(salt => {
-                console.log(salt)
+                // console.log(salt)
                 return bcrypt.hash(user.password, salt)
             })
             .then(encPassword => {
@@ -73,6 +74,44 @@ userSchema.pre('save', function (next) {
         next()
     }
 })
+
+userSchema.statics.findByCredentials = function (email, password) {
+    const User = this
+    return User.findOne({ email }) // findOne returns a query - but the error kept going in the err even when promise is resolved // do a 'user not found-err' in the catch
+        .then(user => {
+            if (!user) {
+                return Promise.reject('invalid email/password')
+            } else {
+                return bcrypt.compare(password, user.password)
+                    .then(result => {
+                        if (result) {
+                            return Promise.resolve(user)
+                        } else {
+                            return Promise.reject('invalid email/password')
+                        }
+                    })
+                    .catch(err => Promise.reject(err))
+            }
+        })
+        .catch(err => Promise.reject(err))
+}
+
+userSchema.methods.generateToken = function () {
+    // console.log('in the genrateToken')
+    const user = this
+    const tokenData = {
+        _id: user._id,
+        mobile: user.mobile,
+        createdAt: Number(new Date())
+    }
+    // console.log('tokenData', tokenData)
+    const token = jwt.sign(tokenData, 'jwt@123')
+    // console.log('token', token)
+    user.tokens.push({ token })
+    return user.save()
+        .then(user => Promise.resolve(token))
+        .catch(err => Promise.reject(err))
+}
 
 const User = mongoose.model('User', userSchema)
 
