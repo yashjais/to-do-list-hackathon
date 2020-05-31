@@ -29,3 +29,10 @@ module.exports.login = (req, res) => {
             res.send(err)
         })
 }
+
+module.exports.account = (req, res) => {
+    const { user } = req
+    const { token } = req
+    // console.log(user, token)
+    res.send(pick(user, ['_id', 'email', 'mobile']))
+}
