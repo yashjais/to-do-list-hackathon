@@ -36,3 +36,11 @@ module.exports.account = (req, res) => {
     // console.log(user, token)
     res.send(pick(user, ['_id', 'email', 'mobile']))
 }
+
+module.exports.logout = (req, res) => {
+    // logout
+    const { user, token } = req
+    User.findByIdAndUpdate(user._id, { $pull: { tokens: { token: token } } })
+        .then(() => res.send('successfully logged out'))
+        .catch(err => res.send(err))
+}
