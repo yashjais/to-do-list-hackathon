@@ -33,7 +33,7 @@ module.exports.login = (req, res) => {
 module.exports.account = (req, res) => {
     const { user } = req
     const { token } = req
-    console.log(user, token)
+    // console.log(user, token)
     res.send(pick(user, ['_id', 'email', 'mobile']))
 }
 
