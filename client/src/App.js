@@ -11,13 +11,15 @@ import {
 } from 'reactstrap';
 
 import Home from './components/Home'
-import Account from './components/user/Account'
 
 import PrivateRoute from './components/routes/PrivateRoute';
 import PublicRoute from './components/routes/PublicRoute';
 
 import Login from './components/user/Login'
 import Register from './components/user/Register'
+import Account from './components/user/Account'
+
+import ListTasks from './components/tasks/List'
 
 import NoMatch from './components/NoMatch'
 
