@@ -13,6 +13,9 @@ import {
 import Home from './components/Home'
 import Account from './components/user/Account'
 
+import PrivateRoute from './components/routes/PrivateRoute';
+import PublicRoute from './components/routes/PublicRoute';
+
 import Login from './components/user/Login'
 import Register from './components/user/Register'
 
@@ -74,12 +77,14 @@ function App(props) {
         </Navbar>
 
         <Switch>
-          <Route path="/" component={Home} exact={true} />
+          <PublicRoute restricted={false} component={Home} path="/" exact />
+          <PublicRoute restricted={true} component={Register} path="/register" exact />
+          <PublicRoute restricted={true} component={Login} path="/login" exact />
+          <PrivateRoute component={Account} path="/account" exact />
 
-          <Route path="/login" component={Login} exact={true} />
-          <Route path="/register" component={Register} exact={true} />
-          <Route path="/account" component={Account} exact={true} />
-          <Route component={NoMatch} />
+          {/* <PrivateRoute component={Task} path="/task" exact /> */}
+
+          <PublicRoute restricted={false} component={NoMatch} exact />
 
         </Switch>
 
