@@ -84,7 +84,7 @@ function App(props) {
           <PublicRoute restricted={true} component={Login} path="/sign_in" exact />
           <PrivateRoute component={Account} path="/account" exact />
 
-          {/* <PrivateRoute component={Task} path="/task" exact /> */}
+          <PrivateRoute component={ListTasks} path="/tasks" exact />
 
           <PublicRoute restricted={false} component={NoMatch} exact />
 
