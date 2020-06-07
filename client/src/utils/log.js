@@ -1,5 +1,5 @@
 export const isLogin = () => {
-    if (localStorage.getItem('authToken')) {
+    if (localStorage.getItem('authToDoToken')) {
         return true;
     }
     return false;

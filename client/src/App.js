@@ -27,9 +27,9 @@ function App(props) {
   const toggle = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
-    const token = localStorage.getItem('authToken')
+    const token = localStorage.getItem('authToDoToken')
     if (token) {
-      localStorage.removeItem('authToken')
+      localStorage.removeItem('authToDoToken')
       window.location.href = '/'
     }
   }
@@ -37,13 +37,13 @@ function App(props) {
     <div className="container-fluid">
       <BrowserRouter>
 
-        <Navbar color="light" light expand="md">
+        <Navbar style={{ background: "rgba(0, 165, 224)" }} light expand="md">
           <NavbarBrand style={{ fontWeight: "bold", textTransform: "uppercase" }}>Tasks App</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               {
-                localStorage.getItem('authtoken') ? (
+                localStorage.getItem('authToDoToken') ? (
                   <React.Fragment>
                     <NavItem>
                       <NavLink tag={Link} to="/">Home</NavLink>
@@ -64,10 +64,10 @@ function App(props) {
                         <NavLink tag={Link} to="/">Home</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink tag={Link} to="/login">Login</NavLink>
+                        <NavLink tag={Link} to="/sign_in">Sign In</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink tag={Link} to="/register">Register</NavLink>
+                        <NavLink tag={Link} to="/sign_up">Sign Up</NavLink>
                       </NavItem>
                     </React.Fragment>
                   )
@@ -78,8 +78,8 @@ function App(props) {
 
         <Switch>
           <PublicRoute restricted={false} component={Home} path="/" exact />
-          <PublicRoute restricted={true} component={Register} path="/register" exact />
-          <PublicRoute restricted={true} component={Login} path="/login" exact />
+          <PublicRoute restricted={true} component={Register} path="/sign_up" exact />
+          <PublicRoute restricted={true} component={Login} path="/sign_in" exact />
           <PrivateRoute component={Account} path="/account" exact />
 
           {/* <PrivateRoute component={Task} path="/task" exact /> */}
